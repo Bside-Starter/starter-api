@@ -1,0 +1,64 @@
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "main", "feature/*" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Grant Execute permission for gradlew
+        run: chmod +x gradlew
+        shell: bash
+
+      - name: Test with Gradle
+        run: ./gradlew clean test
+        shell: bash
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: build/test-results/**/*.xml
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test && pwd
+        shell: bash
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Dockerfile Build and push
+        run: docker build --tag devduhanmo/beside13-6:latest . && docker push devduhanmo/beside13-6:latest
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker rm -f $(docker ps -qa)
+            docker pull devduhanmo/beside13-6:latest
+            docker run -d -p 80:8080 devduhanmo/beside13-6:latest --name app
+            docker image prune -f
