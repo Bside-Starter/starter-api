@@ -1,8 +1,17 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:test
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
+    url: jdbc:mysql://localhost:33061/testdb?useSSL=false
+    username: root
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+starter:
+  app:
+    jwtSecret: sadfjkldsjafklbjvkclxjbvklsjrekwlsercret
+    jwtExpirationMs: 86400000
