@@ -2,14 +2,12 @@ package com.bside.starterapi.domain.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Entity
 @Table(name = "users",
