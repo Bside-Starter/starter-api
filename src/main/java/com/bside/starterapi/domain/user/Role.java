@@ -1,4 +1,4 @@
-package com.bside.starterapi.domain;
+package com.bside.starterapi.domain.user;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.bside.starterapi.domain;
+package com.bside.starterapi.domain.user;
 
 public enum ERole {
     ROLE_USER,
