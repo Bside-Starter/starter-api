@@ -68,7 +68,7 @@ public class AuthService {
         Set<String> strRoles = request.getRole();
         Set<Role> roles = new HashSet<>();
 
-        if (!strRoles.isEmpty()) {
+        if (strRoles != null) {
             setRoles(user, strRoles, roles);
             return userRepository.save(user).getId();
         }
