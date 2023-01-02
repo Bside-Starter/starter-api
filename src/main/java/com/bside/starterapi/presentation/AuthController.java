@@ -20,4 +20,8 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    @PostMapping("/sign-up")
+    public ResponseEntity<ApiResponse<Long>> registerUser(@RequestBody RegisterUserRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(authService.registerUser(request)));
+    }
 }
