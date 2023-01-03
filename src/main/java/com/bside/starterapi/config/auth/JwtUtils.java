@@ -4,7 +4,6 @@ import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -18,15 +17,8 @@ public class JwtUtils {
 
     private final JwtProperties jwtProperties;
 
-    public String generateJwtToken(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-        Date date = Date.from(Instant.now());
-        return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(date)
-                .setExpiration(Date.from(Instant.ofEpochMilli(date.getTime() + jwtProperties.getExpirationMs())))
-                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
-                .compact();
+    public String generateJwtToken(UserDetailsImpl userPrincipal) {
+        return generateJwtFromUsername(userPrincipal);
     }
 
     public String getUserNameFromJwtToken(String token) {
@@ -55,5 +47,16 @@ public class JwtUtils {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
         return false;
+    }
+
+    private String generateJwtFromUsername(UserDetailsImpl userPrincipal) {
+        Date date = Date.from(Instant.now());
+        return Jwts.builder()
+                .setSubject((userPrincipal.getUsername()))
+                .setIssuedAt(date)
+                .claim("id", userPrincipal.getId())
+                .setExpiration(Date.from(Instant.ofEpochMilli(date.getTime() + jwtProperties.getExpirationMs())))
+                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
+                .compact();
     }
 }
