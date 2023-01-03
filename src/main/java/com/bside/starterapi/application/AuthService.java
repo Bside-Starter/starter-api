@@ -61,7 +61,7 @@ public class AuthService {
         }
         User user = User.create(
                 request.getUsername(),
-                request.getPassword(),
+                request.getEmail(),
                 encoder.encode(request.getPassword())
         );
 
