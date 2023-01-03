@@ -1,6 +1,7 @@
-package com.bside.starterapi.presentation;
+package com.bside.starterapi.presentation.auth;
 
 import com.bside.starterapi.application.AuthService;
+import com.bside.starterapi.presentation.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

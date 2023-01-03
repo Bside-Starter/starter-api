@@ -1,4 +1,4 @@
-package com.bside.starterapi.presentation;
+package com.bside.starterapi.presentation.auth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
