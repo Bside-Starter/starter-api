@@ -34,11 +34,11 @@ public class AuthService {
     @Transactional
     public JwtResponse generateTokenBySignIn(AuthenticateUserRequest request) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        String jwt = jwtUtils.generateJwtToken(userDetails);
+        String jwt = jwtUtils.generateJwtFromUsername(userDetails.getEmail());
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
@@ -56,9 +56,6 @@ public class AuthService {
 
     @Transactional
     public Long registerUser(RegisterUserRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new AlreadyExistsUsernameException();
-        }
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new AlreadyExistsEmailException();
         }

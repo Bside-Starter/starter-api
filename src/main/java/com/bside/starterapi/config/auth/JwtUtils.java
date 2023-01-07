@@ -17,21 +17,17 @@ public class JwtUtils {
 
     private final JwtProperties jwtProperties;
 
-    public String generateJwtToken(UserDetailsImpl userPrincipal) {
-        return generateJwtFromUsername(userPrincipal.getUsername());
-    }
-
-    public String generateJwtFromUsername(String username) {
+    public String generateJwtFromUsername(String email) {
         Date date = Date.from(Instant.now());
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(date)
                 .setExpiration(Date.from(Instant.ofEpochMilli(date.getTime() + jwtProperties.getExpirationMs())))
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
                 .compact();
     }
 
-    public String getUserNameFromJwtToken(String token) {
+    public String getEmailFromJwtToken(String token) {
         return Jwts.parser()
                 .setSigningKey(jwtProperties.getSecret())
                 .parseClaimsJws(token)
