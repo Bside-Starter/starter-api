@@ -1,7 +1,8 @@
 package com.bside.starterapi.presentation.auth;
 
 import com.bside.starterapi.application.AuthService;
-import com.bside.starterapi.presentation.ApiResponse;
+import com.bside.starterapi.application.RefreshTokenService;
+import com.bside.starterapi.presentation.StatusDataResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,20 +10,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
 
-    @PostMapping("/sign-in")
-    public ResponseEntity<ApiResponse<JwtResponse>> generateToken(@RequestBody AuthenticateUserRequest request) {
+    @PostMapping("/signin")
+    public ResponseEntity<StatusDataResult<JwtResponse>> generateToken(@Valid @RequestBody AuthenticateUserRequest request) {
         JwtResponse response = authService.generateTokenBySignIn(request);
-        return ResponseEntity.ok(ApiResponse.success(response));
+        return ResponseEntity.ok(StatusDataResult.success(response));
     }
 
-    @PostMapping("/sign-up")
-    public ResponseEntity<ApiResponse<Long>> registerUser(@RequestBody RegisterUserRequest request) {
-        return ResponseEntity.ok(ApiResponse.success(authService.registerUser(request)));
+    @PostMapping("/signup")
+    public ResponseEntity<StatusDataResult<Long>> registerUser(@Valid @RequestBody RegisterUserRequest request) {
+        return ResponseEntity.ok(StatusDataResult.success(authService.registerUser(request)));
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<StatusDataResult<TokenRefreshResponse>> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
+        return ResponseEntity.ok(StatusDataResult.success(refreshTokenService.refresh(request)));
     }
 }

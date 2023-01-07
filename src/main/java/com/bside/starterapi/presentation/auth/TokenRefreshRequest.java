@@ -5,17 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterUserRequest {
+public class TokenRefreshRequest {
     @NotBlank
-    private String username;
-    @NotBlank
-    private String email;
-    @NotBlank
-    private String password;
-    private Set<String> role;
+    private String refreshToken;
 }

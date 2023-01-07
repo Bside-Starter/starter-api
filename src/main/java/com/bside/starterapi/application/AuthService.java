@@ -29,8 +29,9 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final RoleRepository roleRepository;
+    private final RefreshTokenService refreshTokenService;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public JwtResponse generateTokenBySignIn(AuthenticateUserRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -42,8 +43,10 @@ public class AuthService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
         return new JwtResponse(
                 jwt,
+                refreshToken.getToken(),
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),

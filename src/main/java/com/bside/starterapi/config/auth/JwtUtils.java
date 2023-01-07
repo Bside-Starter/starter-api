@@ -18,7 +18,17 @@ public class JwtUtils {
     private final JwtProperties jwtProperties;
 
     public String generateJwtToken(UserDetailsImpl userPrincipal) {
-        return generateJwtFromUsername(userPrincipal);
+        return generateJwtFromUsername(userPrincipal.getUsername());
+    }
+
+    public String generateJwtFromUsername(String username) {
+        Date date = Date.from(Instant.now());
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(date)
+                .setExpiration(Date.from(Instant.ofEpochMilli(date.getTime() + jwtProperties.getExpirationMs())))
+                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
+                .compact();
     }
 
     public String getUserNameFromJwtToken(String token) {
@@ -47,16 +57,5 @@ public class JwtUtils {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
         return false;
-    }
-
-    private String generateJwtFromUsername(UserDetailsImpl userPrincipal) {
-        Date date = Date.from(Instant.now());
-        return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(date)
-                .claim("id", userPrincipal.getId())
-                .setExpiration(Date.from(Instant.ofEpochMilli(date.getTime() + jwtProperties.getExpirationMs())))
-                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
-                .compact();
     }
 }

@@ -1,11 +1,17 @@
 package com.bside.starterapi.presentation.auth;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthenticateUserRequest {
-    private final String username;
-    private final String password;
+    @NotBlank
+    private String username;
+    @NotBlank
+    private String password;
 }
