@@ -1,8 +1,9 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:test
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
-  jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+  config:
+    import:
+      - optional:config/env.yml
+
+jwt:
+  secret: sadfjkldsjafklbjvkclxjbvklsjrekwlsercret
+  expiration-ms: 3600000
+  refresh-expiration-ms: 86400000
