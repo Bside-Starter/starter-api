@@ -1,15 +1,7 @@
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:33061/testdb?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=UTC
-    username: root
-    password: test
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+  config:
+    import:
+      - optional:config/env.yml
 
 jwt:
   secret: sadfjkldsjafklbjvkclxjbvklsjrekwlsercret
