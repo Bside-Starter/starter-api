@@ -1,7 +1,7 @@
 package com.bside.starterapi.config.auth;
 
-import com.bside.starterapi.domain.user.User;
-import com.bside.starterapi.domain.user.UserRepository;
+import com.bside.starterapi.user.domain.User;
+import com.bside.starterapi.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
