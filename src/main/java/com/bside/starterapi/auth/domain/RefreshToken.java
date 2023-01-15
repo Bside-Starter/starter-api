@@ -1,5 +1,6 @@
-package com.bside.starterapi.user.domain;
+package com.bside.starterapi.auth.domain;
 
+import com.bside.starterapi.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;

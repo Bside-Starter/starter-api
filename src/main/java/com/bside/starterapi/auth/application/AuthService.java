@@ -1,5 +1,6 @@
 package com.bside.starterapi.auth.application;
 
+import com.bside.starterapi.auth.domain.RefreshToken;
 import com.bside.starterapi.auth.dto.AuthenticateUserRequest;
 import com.bside.starterapi.auth.dto.JwtResponse;
 import com.bside.starterapi.auth.dto.RegisterUserRequest;

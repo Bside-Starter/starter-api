@@ -12,7 +12,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
 public class User {
@@ -26,6 +25,9 @@ public class User {
 
     private String password;
 
+    private String nickname;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -36,15 +38,18 @@ public class User {
         this.roles = roles;
     }
 
-    protected User(String username, String email, String password) {
+    protected User(String username, String email, String password, String nickname) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
     }
 
-    public static User create(String username, String email, String password) {
+    public static User create(String username, String email, String password, String nickname) {
         return new User(username,
                 email,
-                password);
+                password,
+                nickname
+        );
     }
 }

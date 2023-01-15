@@ -1,5 +1,6 @@
-package com.bside.starterapi.user.domain;
+package com.bside.starterapi.auth.domain;
 
+import com.bside.starterapi.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
