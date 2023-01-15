@@ -18,4 +18,5 @@ public class RegisterUserRequest {
     @NotBlank
     private String password;
     private Set<String> role;
+    private String nickname;
 }
