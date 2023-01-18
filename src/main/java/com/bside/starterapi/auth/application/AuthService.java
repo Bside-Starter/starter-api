@@ -1,5 +1,6 @@
 package com.bside.starterapi.auth.application;
 
+import com.bside.starterapi.auth.domain.RefreshToken;
 import com.bside.starterapi.auth.dto.AuthenticateUserRequest;
 import com.bside.starterapi.auth.dto.JwtResponse;
 import com.bside.starterapi.auth.dto.RegisterUserRequest;
@@ -62,7 +63,8 @@ public class AuthService {
         User user = User.create(
                 request.getUsername(),
                 request.getEmail(),
-                encoder.encode(request.getPassword())
+                encoder.encode(request.getPassword()),
+                request.getNickname()
         );
 
         Set<String> strRoles = request.getRole();
