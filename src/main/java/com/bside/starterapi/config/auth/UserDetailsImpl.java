@@ -1,6 +1,6 @@
 package com.bside.starterapi.config.auth;
 
-import com.bside.starterapi.user.domain.User;
+import com.bside.starterapi.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
