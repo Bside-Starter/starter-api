@@ -20,17 +20,17 @@ public class PostRegisterController {
     private final PostRegisterService postRegisterService;
     private final AuthenticationFacade facade;
 
-    @PostMapping("/api/posts/books")
+    @PostMapping("/books")
     private ResponseEntity<StatusDataResult<Long>> registerBookPost(@RequestBody @Valid PostRegisterRequest request) {
         return ResponseEntity.ok(StatusDataResult.success(postRegisterService.registerBookPost(facade.getUserId(), request)));
     }
 
-    @PostMapping("/api/posts/media")
+    @PostMapping("/media")
     private ResponseEntity<StatusDataResult<Long>> registerMediaPost(@RequestBody @Valid PostRegisterRequest request) {
         return ResponseEntity.ok(StatusDataResult.success(postRegisterService.registerMediaPost(facade.getUserId(), request)));
     }
 
-    @PostMapping("/api/posts/display")
+    @PostMapping("/display")
     private ResponseEntity<StatusDataResult<Long>> registerDisplayPost(@RequestBody @Valid PostRegisterRequest request) {
         return ResponseEntity.ok(StatusDataResult.success(postRegisterService.registerDisplayPost(facade.getUserId(), request)));
     }
