@@ -1,8 +1,10 @@
 package com.bside.starterapi.domain.post;
 
-import com.bside.starterapi.domain.post.book.Book;
-import com.bside.starterapi.domain.post.book.BookRepository;
-import com.bside.starterapi.domain.user.User;
+import com.bside.starterapi.api.domain.post.Post;
+import com.bside.starterapi.api.domain.post.PostRepository;
+import com.bside.starterapi.api.domain.post.book.Book;
+import com.bside.starterapi.api.domain.post.book.BookRepository;
+import com.bside.starterapi.api.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
