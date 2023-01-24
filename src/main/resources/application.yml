@@ -2,7 +2,9 @@ spring:
   config:
     import:
       - optional:config/env.yml
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 jwt:
   secret: sadfjkldsjafklbjvkclxjbvklsjrekwlsercret
   expiration-ms: 3600000
