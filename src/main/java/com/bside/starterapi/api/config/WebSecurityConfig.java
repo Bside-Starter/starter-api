@@ -85,7 +85,7 @@ public class WebSecurityConfig {
                 HttpMethod.PUT.name(),
                 HttpMethod.DELETE.name()));
         corsConfiguration.setMaxAge(1800L);
-        source.registerCorsConfiguration("/**", corsConfiguration); // you restrict your path here
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
 }
