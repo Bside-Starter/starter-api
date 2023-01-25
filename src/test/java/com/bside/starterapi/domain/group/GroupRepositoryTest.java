@@ -41,7 +41,6 @@ public class GroupRepositoryTest {
 
         Group findGroup = groupRepository.getById(Objects.requireNonNull(group.getId()));
 
-        System.out.println(findGroup.getUser().getUsername());
         assertThat(findGroup.getName()).isEqualTo(group.getName());
         assertThat(findGroup.getUser().getUsername()).isEqualTo(user.getUsername());
     }
