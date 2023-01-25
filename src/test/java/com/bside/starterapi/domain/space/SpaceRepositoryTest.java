@@ -1,8 +1,8 @@
-package com.bside.starterapi.domain.group;
+package com.bside.starterapi.domain.space;
 
-import com.bside.starterapi.api.domain.group.Group;
-import com.bside.starterapi.api.domain.group.GroupColorTheme;
-import com.bside.starterapi.api.domain.group.GroupRepository;
+import com.bside.starterapi.api.domain.space.Space;
+import com.bside.starterapi.api.domain.space.SpaceColorTheme;
+import com.bside.starterapi.api.domain.space.SpaceRepository;
 import com.bside.starterapi.api.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,32 +17,32 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
-public class GroupRepositoryTest {
+public class SpaceRepositoryTest {
 
     @Autowired
-    private GroupRepository groupRepository;
+    private SpaceRepository spaceRepository;
 
     @BeforeEach
     void before_each() {
-        groupRepository.deleteAll();
+        spaceRepository.deleteAll();
     }
 
-    @DisplayName("유저가 그룹을 만들 수 있다")
+    @DisplayName("유저가 스페이스를 만들 수 있다")
     @Test
-    void create_group() {
+    void create_space() {
         User user = createUser();
-        Group group = Group.builder()
+        Space space = Space.builder()
                 .code("AB12345678")
                 .user(user)
                 .name("소근방")
-                .theme(GroupColorTheme.BLUE)
+                .theme(SpaceColorTheme.BLUE)
                 .build();
-        groupRepository.save(group);
+        spaceRepository.save(space);
 
-        Group findGroup = groupRepository.getById(Objects.requireNonNull(group.getId()));
+        Space findSpace = spaceRepository.getById(Objects.requireNonNull(space.getId()));
 
-        assertThat(findGroup.getName()).isEqualTo(group.getName());
-        assertThat(findGroup.getUser().getUsername()).isEqualTo(user.getUsername());
+        assertThat(findSpace.getName()).isEqualTo(space.getName());
+        assertThat(findSpace.getUser().getUsername()).isEqualTo(user.getUsername());
     }
 
     private User createUser() {
