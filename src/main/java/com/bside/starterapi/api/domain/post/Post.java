@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Entity
+@Table(name = "post")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Post extends BaseAggregateRoot<Long> {

@@ -9,9 +9,11 @@ import lombok.NonNull;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Entity
+@Table(name = "book")
 @DiscriminatorValue(PostType.Values.BOOK)
 public class Book extends Post {
     private String bookTitle = "";
