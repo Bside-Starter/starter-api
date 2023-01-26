@@ -6,11 +6,10 @@ import com.bside.starterapi.api.domain.user.User;
 
 public class SpaceFixtures {
     public static Space createSpace(User user) {
-        return Space.builder()
-                .code("AB12345678")
-                .user(user)
-                .name("소근방")
-                .theme(SpaceColorTheme.BLUE)
-                .build();
+        return Space.of(
+                user,
+                SpaceColorTheme.BLACK,
+                "소근방",
+                "AB12345678");
     }
 }

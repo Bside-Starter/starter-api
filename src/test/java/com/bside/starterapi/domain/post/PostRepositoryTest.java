@@ -63,13 +63,12 @@ class PostRepositoryTest {
 
 
     private Book createBook(User user) {
-        return Book.builder()
-                .bookTitle("노인과 바다")
-                .title("안보면 후회해요")
-                .star(5.0F)
-                .content("이 책 정말 감명깊습니다.")
-                .isShare(false)
-                .user(user)
-                .build();
+        return Book.of("안보면 후회해요",
+                "이 책 정말 감명깊습니다.",
+                5.0F,
+                true,
+                user,
+                "노인과 바다",
+                "url.xtt");
     }
 }
