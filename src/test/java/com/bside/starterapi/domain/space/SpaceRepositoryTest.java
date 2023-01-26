@@ -1,9 +1,9 @@
 package com.bside.starterapi.domain.space;
 
 import com.bside.starterapi.api.domain.space.Space;
-import com.bside.starterapi.api.domain.space.SpaceColorTheme;
 import com.bside.starterapi.api.domain.space.SpaceRepository;
 import com.bside.starterapi.api.domain.user.User;
+import com.bside.starterapi.support.fixtures.SpaceFixtures;
 import com.bside.starterapi.support.fixtures.UserFixtures;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,12 +32,7 @@ public class SpaceRepositoryTest {
     @Test
     void create_space() {
         User user = UserFixtures.createUser();
-        Space space = Space.builder()
-                .code("AB12345678")
-                .user(user)
-                .name("소근방")
-                .theme(SpaceColorTheme.BLUE)
-                .build();
+        Space space = SpaceFixtures.createSpace(user);
         spaceRepository.save(space);
 
         Space findSpace = spaceRepository.getById(Objects.requireNonNull(space.getId()));
