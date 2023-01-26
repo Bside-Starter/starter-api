@@ -4,6 +4,7 @@ import com.bside.starterapi.api.domain.space.Space;
 import com.bside.starterapi.api.domain.space.SpaceColorTheme;
 import com.bside.starterapi.api.domain.space.SpaceRepository;
 import com.bside.starterapi.api.domain.user.User;
+import com.bside.starterapi.support.fixtures.UserFixtures;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class SpaceRepositoryTest {
     @DisplayName("유저가 스페이스를 만들 수 있다")
     @Test
     void create_space() {
-        User user = createUser();
+        User user = UserFixtures.createUser();
         Space space = Space.builder()
                 .code("AB12345678")
                 .user(user)
@@ -45,7 +46,4 @@ public class SpaceRepositoryTest {
         assertThat(findSpace.getUser().getUsername()).isEqualTo(user.getUsername());
     }
 
-    private User createUser() {
-        return User.create("홍길동", "gildong@test.com", "password123", "nickname");
-    }
 }

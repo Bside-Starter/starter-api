@@ -5,6 +5,7 @@ import com.bside.starterapi.api.domain.post.PostRepository;
 import com.bside.starterapi.api.domain.post.book.Book;
 import com.bside.starterapi.api.domain.post.book.BookRepository;
 import com.bside.starterapi.api.domain.user.User;
+import com.bside.starterapi.support.fixtures.UserFixtures;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class PostRepositoryTest {
     @DisplayName("책 포스팅이 정상 저장된다")
     @Test
     void post_save() {
-        Book book = createBook(createUser());
+        Book book = createBook(UserFixtures.createUser());
         postRepository.save(book);
 
         Book findBook = bookRepository.getById(Objects.requireNonNull(book.getId()));
@@ -48,7 +49,7 @@ class PostRepositoryTest {
     @DisplayName("포스팅 내용이 정상 수정된다")
     @Test
     void post_title_update() {
-        Post post = createBook(createUser());
+        Post post = createBook(UserFixtures.createUser());
         postRepository.save(post);
 
         post.updateTitle("new Title");
@@ -60,9 +61,6 @@ class PostRepositoryTest {
         assertThat(findPost.getTitle()).isEqualTo("new Title");
     }
 
-    private User createUser() {
-        return User.create("홍길동", "gildong@test.com", "password123", "nickname");
-    }
 
     private Book createBook(User user) {
         return Book.builder()
