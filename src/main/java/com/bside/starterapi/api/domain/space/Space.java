@@ -3,7 +3,6 @@ package com.bside.starterapi.api.domain.space;
 import com.bside.starterapi.api.domain.spacemember.SpaceMember;
 import com.bside.starterapi.api.domain.user.User;
 import com.bside.starterapi.support.domain.BaseAggregateRoot;
-import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -39,7 +38,10 @@ public class Space extends BaseAggregateRoot<Long> {
         attendee.setSpace(this);
     }
 
-    @Builder
+    public static Space of(User user, SpaceColorTheme theme, String name, String code) {
+        return new Space(user, theme, name, code);
+    }
+
     protected Space(User user, SpaceColorTheme theme, String name, String code) {
         this.user = user;
         this.theme = theme;

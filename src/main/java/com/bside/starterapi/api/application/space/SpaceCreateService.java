@@ -20,12 +20,10 @@ public class SpaceCreateService {
     public SpaceCreateResponse create(Long userId, SpaceCreateRequest request) {
         User user = userRepository.getById(userId);
         String code = RandomCodeGenerator.get();
-        Space space = Space.builder()
-                .user(user)
-                .theme(request.getTheme())
-                .code(code)
-                .name(request.getName())
-                .build();
+        Space space = Space.of(user,
+                request.getTheme(),
+                request.getName(),
+                code);
         return new SpaceCreateResponse(spaceRepository.save(space).getId(), code);
     }
 }

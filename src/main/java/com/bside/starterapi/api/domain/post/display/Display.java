@@ -3,7 +3,6 @@ package com.bside.starterapi.api.domain.post.display;
 import com.bside.starterapi.api.domain.post.Post;
 import com.bside.starterapi.api.domain.post.PostType;
 import com.bside.starterapi.api.domain.user.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -20,7 +19,17 @@ public class Display extends Post {
 
     private String location = "";
 
-    @Builder
+    public static Display of(String title,
+                             String content,
+                             Float star,
+                             boolean isShare,
+                             User user,
+                             @NonNull String displayTitle,
+                             String location,
+                             String imageUrl) {
+        return new Display(title, content, star, isShare, user, displayTitle, location, imageUrl);
+    }
+
     protected Display(String title,
                       String content,
                       Float star,

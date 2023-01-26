@@ -18,44 +18,42 @@ public class PostRegisterService {
 
     @Transactional
     public Long registerBookPost(Long userId, PostRegisterRequest request) {
-        Book book = Book.builder()
-                .user(userRepository.getById(userId))
-                .bookTitle(request.getTopic())
-                .title(request.getPostTitle())
-                .content(request.getPostContent())
-                .isShare(request.isShare())
-                .star(request.getStar())
-                .imageUrl(request.getImageUrl())
-                .build();
+        Book book = Book.of(
+                request.getPostTitle(),
+                request.getPostContent(),
+                request.getStar(),
+                request.isShare(),
+                userRepository.getById(userId),
+                request.getTopic(),
+                request.getImageUrl());
         return postRepository.save(book).getId();
     }
 
     @Transactional
     public Long registerMediaPost(Long userId, PostRegisterRequest request) {
-        Media media = Media.builder()
-                .user(userRepository.getById(userId))
-                .mediaTitle(request.getTopic())
-                .title(request.getPostTitle())
-                .content(request.getPostContent())
-                .isShare(request.isShare())
-                .star(request.getStar())
-                .imageUrl(request.getImageUrl())
-                .build();
+        Media media = Media.of(
+                request.getPostTitle(),
+                request.getPostContent(),
+                request.getStar(),
+                request.isShare(),
+                userRepository.getById(userId),
+                request.getTopic(),
+                request.getImageUrl());
         return postRepository.save(media).getId();
     }
 
     @Transactional
     public Long registerDisplayPost(Long userId, PostRegisterRequest request) {
-        Display display = Display.builder()
-                .user(userRepository.getById(userId))
-                .displayTitle(request.getTopic())
-                .location(request.getLocation())
-                .title(request.getPostTitle())
-                .content(request.getPostContent())
-                .isShare(request.isShare())
-                .imageUrl(request.getImageUrl())
-                .star(request.getStar())
-                .build();
+        Display display = Display.of(
+                request.getPostTitle(),
+                request.getPostContent(),
+                request.getStar(),
+                request.isShare(),
+                userRepository.getById(userId),
+                request.getTopic(),
+                request.getLocation(),
+                request.getImageUrl()
+        );
         return postRepository.save(display).getId();
     }
 }
