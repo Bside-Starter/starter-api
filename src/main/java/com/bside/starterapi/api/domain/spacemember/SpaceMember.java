@@ -19,6 +19,8 @@ public class SpaceMember extends BaseAggregateRoot<Long> {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private SpaceMemberState state = SpaceMemberState.VALID;
+
     public void setSpace(Space space) {
         this.space = space;
     }
@@ -32,5 +34,10 @@ public class SpaceMember extends BaseAggregateRoot<Long> {
         this.user = user;
     }
 
-    protected SpaceMember() {}
+    protected SpaceMember() {
+    }
+
+    public void exit() {
+        this.state = SpaceMemberState.EXIT;
+    }
 }
