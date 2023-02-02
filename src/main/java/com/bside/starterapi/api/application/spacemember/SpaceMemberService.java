@@ -6,7 +6,7 @@ import com.bside.starterapi.api.domain.spacemember.SpaceMember;
 import com.bside.starterapi.api.domain.spacemember.SpaceMemberRepository;
 import com.bside.starterapi.api.domain.user.User;
 import com.bside.starterapi.api.domain.user.UserRepository;
-import com.bside.starterapi.api.presentation.spacemember.dto.SpaceExitResponse;
+import com.bside.starterapi.api.presentation.space.dto.SpaceExitResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
