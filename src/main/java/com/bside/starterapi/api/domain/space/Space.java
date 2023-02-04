@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "space")
 public class Space extends BaseAggregateRoot<Long> {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -27,20 +27,7 @@ public class Space extends BaseAggregateRoot<Long> {
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpaceMember> spaceMembers = new ArrayList<>();
 
-    public List<User> getAttendees() {
-        return spaceMembers.stream()
-                .map(SpaceMember::getUser)
-                .collect(Collectors.toList());
-    }
-
-    public void addAttendee(SpaceMember attendee) {
-        spaceMembers.add(attendee);
-        attendee.setSpace(this);
-    }
-
-    public static Space of(User user, SpaceColorTheme theme, String name, String code) {
-        return new Space(user, theme, name, code);
-    }
+    private final SpaceState state = SpaceState.VALID;
 
     protected Space(User user, SpaceColorTheme theme, String name, String code) {
         this.user = user;
@@ -50,5 +37,20 @@ public class Space extends BaseAggregateRoot<Long> {
     }
 
     protected Space() {
+    }
+
+    public static Space of(User user, SpaceColorTheme theme, String name, String code) {
+        return new Space(user, theme, name, code);
+    }
+
+    public List<User> getAttendees() {
+        return spaceMembers.stream()
+                .map(SpaceMember::getUser)
+                .collect(Collectors.toList());
+    }
+
+    public void addAttendee(SpaceMember attendee) {
+        spaceMembers.add(attendee);
+        attendee.setSpace(this);
     }
 }

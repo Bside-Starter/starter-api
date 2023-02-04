@@ -3,6 +3,7 @@ package com.bside.starterapi.api.presentation.auth;
 import com.bside.starterapi.api.application.auth.AuthService;
 import com.bside.starterapi.api.application.auth.RefreshTokenService;
 import com.bside.starterapi.api.presentation.auth.dto.*;
+import com.bside.starterapi.support.presentation.CommonStatus;
 import com.bside.starterapi.support.presentation.StatusDataResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +22,18 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/signin")
-    public ResponseEntity<StatusDataResult<JwtResponse>> generateToken(@Valid @RequestBody AuthenticateUserRequest request) {
+    public ResponseEntity<StatusDataResult<CommonStatus, JwtResponse>> generateToken(@Valid @RequestBody AuthenticateUserRequest request) {
         JwtResponse response = authService.generateTokenBySignIn(request);
         return ResponseEntity.ok(StatusDataResult.success(response));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<StatusDataResult<Long>> registerUser(@Valid @RequestBody RegisterUserRequest request) {
+    public ResponseEntity<StatusDataResult<CommonStatus, Long>> registerUser(@Valid @RequestBody RegisterUserRequest request) {
         return ResponseEntity.ok(StatusDataResult.success(authService.registerUser(request)));
     }
 
     @PostMapping("/refreshtoken")
-    public ResponseEntity<StatusDataResult<TokenRefreshResponse>> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
+    public ResponseEntity<StatusDataResult<CommonStatus, TokenRefreshResponse>> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
         return ResponseEntity.ok(StatusDataResult.success(refreshTokenService.refresh(request)));
     }
 }
