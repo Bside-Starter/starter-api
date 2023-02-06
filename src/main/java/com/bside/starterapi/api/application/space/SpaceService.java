@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -44,5 +45,15 @@ public class SpaceService {
                 .map(SpaceResponse::from)
                 .collect(Collectors.toList());
         return new StatusDataResult<>(GetSpacesStatus.SUCCESS, result);
+    }
+
+    @Transactional
+    public Long delete(Long userId, Long spaceId) {
+        Space space = spaceRepository.getById(spaceId);
+        if (!Objects.equals(space.getUser().getId(), userId)) {
+            throw new IllegalArgumentException("삭제할 수 있는 권한이 없습니다.");
+        }
+        space.delete();
+        return space.getId();
     }
 }

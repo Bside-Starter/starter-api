@@ -27,7 +27,7 @@ public class Space extends BaseAggregateRoot<Long> {
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpaceMember> spaceMembers = new ArrayList<>();
 
-    private final SpaceState state = SpaceState.VALID;
+    private SpaceState state = SpaceState.VALID;
 
     protected Space(User user, SpaceColorTheme theme, String name, String code) {
         this.user = user;
@@ -52,5 +52,9 @@ public class Space extends BaseAggregateRoot<Long> {
     public void addAttendee(SpaceMember attendee) {
         spaceMembers.add(attendee);
         attendee.setSpace(this);
+    }
+
+    public void delete() {
+        this.state = SpaceState.DELETE;
     }
 }

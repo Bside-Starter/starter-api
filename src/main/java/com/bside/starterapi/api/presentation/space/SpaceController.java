@@ -43,4 +43,9 @@ public class SpaceController {
     public ResponseEntity<?> getMySpaces() {
         return ResponseEntity.ok(spaceService.getMySpaces(facade.getUserId()));
     }
+
+    @DeleteMapping("/{spaceId}")
+    public ResponseEntity<?> delete(@PathVariable Long spaceId) {
+        return ResponseEntity.ok(StatusDataResult.success(spaceService.delete(facade.getUserId(), spaceId)));
+    }
 }
