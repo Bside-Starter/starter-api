@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "space")
 public class Space extends BaseAggregateRoot<Long> {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -27,6 +27,22 @@ public class Space extends BaseAggregateRoot<Long> {
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpaceMember> spaceMembers = new ArrayList<>();
 
+    private SpaceState state = SpaceState.VALID;
+
+    protected Space(User user, SpaceColorTheme theme, String name, String code) {
+        this.user = user;
+        this.theme = theme;
+        this.name = name;
+        this.code = code;
+    }
+
+    protected Space() {
+    }
+
+    public static Space of(User user, SpaceColorTheme theme, String name, String code) {
+        return new Space(user, theme, name, code);
+    }
+
     public List<User> getAttendees() {
         return spaceMembers.stream()
                 .map(SpaceMember::getUser)
@@ -38,17 +54,7 @@ public class Space extends BaseAggregateRoot<Long> {
         attendee.setSpace(this);
     }
 
-    public static Space of(User user, SpaceColorTheme theme, String name, String code) {
-        return new Space(user, theme, name, code);
-    }
-
-    protected Space(User user, SpaceColorTheme theme, String name, String code) {
-        this.user = user;
-        this.theme = theme;
-        this.name = name;
-        this.code = code;
-    }
-
-    protected Space() {
+    public void delete() {
+        this.state = SpaceState.DELETE;
     }
 }

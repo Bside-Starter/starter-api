@@ -31,9 +31,7 @@ public class User extends BaseAggregateRoot<Long> {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+    private String profile;
 
     protected User(String username, String email, String password, String nickname) {
         this.username = username;
@@ -48,5 +46,9 @@ public class User extends BaseAggregateRoot<Long> {
                 password,
                 nickname
         );
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
