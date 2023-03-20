@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('USER')")
 @RestController
-@RequestMapping("/api/space")
+@RequestMapping("/api/spaces")
 public class SpaceController {
     private final SpaceCreateService spaceCreateService;
     private final SpaceMemberService spaceMemberService;
@@ -24,20 +25,27 @@ public class SpaceController {
     private final AuthenticationFacade facade;
 
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> create(SpaceCreateRequest request) {
         return ResponseEntity.ok(StatusDataResult.success(spaceCreateService.create(facade.getUserId(), request)));
     }
 
     @PostMapping("/{spaceId}/exit")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> exitSpace(@PathVariable Long spaceId) {
         return ResponseEntity.ok(StatusDataResult.success(spaceMemberService.exit(facade.getUserId(), spaceId)));
     }
 
     @PostMapping("/join")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> joinSpace(@RequestBody @Valid SpaceJoinRequest request) {
         return ResponseEntity.ok(StatusDataResult.success(spaceService.join(facade.getUserId(), request)));
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<?> getMySpaces() {
+        return ResponseEntity.ok(spaceService.getMySpaces(facade.getUserId()));
+    }
+
+    @DeleteMapping("/{spaceId}")
+    public ResponseEntity<?> delete(@PathVariable Long spaceId) {
+        return ResponseEntity.ok(StatusDataResult.success(spaceService.delete(facade.getUserId(), spaceId)));
     }
 }
