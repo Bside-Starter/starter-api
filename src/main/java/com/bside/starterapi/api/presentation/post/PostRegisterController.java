@@ -30,14 +30,20 @@ public class PostRegisterController {
     @PostMapping("/media")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> registerMedia(@RequestBody @Valid PostRegisterRequest request) {
-        postRegisterService.registerMediaPost(facade.getUserId(), request);
-        return ResponseEntity.ok(StatusDataResult.success(postRegisterService.registerMediaPost(facade.getUserId(), request)));
+        return ResponseEntity.ok(
+                StatusDataResult.success(
+                        postRegisterService.registerMediaPost(facade.getUserId(), request)
+                )
+        );
     }
 
     @PostMapping("/display")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> registerDisplay(@RequestBody @Valid PostRegisterRequest request) {
-        postRegisterService.registerMediaPost(facade.getUserId(), request);
-        return ResponseEntity.ok(StatusDataResult.success(postRegisterService.registerDisplayPost(facade.getUserId(), request)));
+        return ResponseEntity.ok(
+                StatusDataResult.success(
+                        postRegisterService.registerDisplayPost(facade.getUserId(), request)
+                )
+        );
     }
 }
